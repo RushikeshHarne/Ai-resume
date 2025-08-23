@@ -3,3 +3,4 @@ config();
 
 import '@/ai/flows/ats-resume-generation.ts';
 import '@/ai/flows/job-role-suggestion.ts';
+import '@/ai/flows/chat-bot-flow.ts';

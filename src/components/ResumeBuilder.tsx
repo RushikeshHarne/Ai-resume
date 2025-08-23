@@ -74,7 +74,7 @@ const ResumePreview = ({ content }: { content: string }) => {
     return null;
   };
 
-  return <div className="prose prose-sm max-w-none">{content.split('\n').map(renderLine)}</div>;
+  return <div className="prose prose-sm max-w-none text-black">{content.split('\n').map(renderLine)}</div>;
 };
 
 export function ResumeBuilder() {

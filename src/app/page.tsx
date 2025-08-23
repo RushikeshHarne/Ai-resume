@@ -1,5 +1,6 @@
 import { Briefcase } from 'lucide-react';
 import { ResumeBuilder } from '@/components/ResumeBuilder';
+import { ChatBot } from '@/components/ChatBot';
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
           <ResumeBuilder />
         </main>
       </div>
+      <ChatBot />
     </div>
   );
 }
