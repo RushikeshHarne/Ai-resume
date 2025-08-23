@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, useFieldArray, Controller } from "react-hook-form";
+import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Wand2, Briefcase, Download, Trash2, PlusCircle, BrainCircuit, Loader2 } from "lucide-react";
@@ -146,36 +146,36 @@ export function ResumeBuilder() {
   const handlePrint = () => window.print();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-      <Card className="md:col-span-1">
-        <CardHeader>
-          <CardTitle>Your Information</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
+    <FormProvider {...form}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <Card className="md:col-span-1">
+          <CardHeader>
+            <CardTitle>Your Information</CardTitle>
+          </CardHeader>
+          <CardContent>
             <form onSubmit={form.handleSubmit(onGenerate)} className="space-y-6">
               <Accordion type="multiple" defaultValue={['item-1', 'item-2', 'item-3']} className="w-full">
                 <AccordionItem value="item-1">
                   <AccordionTrigger className="font-semibold">Personal Details</AccordionTrigger>
                   <AccordionContent className="space-y-4 pt-4">
-                    <FormField name="name" control={form.control} render={({ field }) => <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                    <FormField name="name" render={({ field }) => <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <FormField name="email" control={form.control} render={({ field }) => <FormItem><FormLabel>Email</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-                        <FormField name="phone" control={form.control} render={({ field }) => <FormItem><FormLabel>Phone</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                        <FormField name="email" render={({ field }) => <FormItem><FormLabel>Email</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                        <FormField name="phone" render={({ field }) => <FormItem><FormLabel>Phone</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
                     </div>
-                    <FormField name="linkedin" control={form.control} render={({ field }) => <FormItem><FormLabel>LinkedIn Profile URL</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                    <FormField name="linkedin" render={({ field }) => <FormItem><FormLabel>LinkedIn Profile URL</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2">
                   <AccordionTrigger className="font-semibold">Professional Summary</AccordionTrigger>
                   <AccordionContent className="pt-4">
-                    <FormField name="summary" control={form.control} render={({ field }) => <FormItem><FormLabel>Summary</FormLabel><FormControl><Textarea rows={5} {...field} /></FormControl><FormMessage /></FormItem>} />
+                    <FormField name="summary" render={({ field }) => <FormItem><FormLabel>Summary</FormLabel><FormControl><Textarea rows={5} {...field} /></FormControl><FormMessage /></FormItem>} />
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3">
                   <AccordionTrigger className="font-semibold">Skills</AccordionTrigger>
                   <AccordionContent className="pt-4">
-                     <FormField name="skills" control={form.control} render={({ field }) => <FormItem><FormLabel>Skills (comma-separated)</FormLabel><FormControl><Textarea rows={3} {...field} /></FormControl><FormMessage /></FormItem>} />
+                     <FormField name="skills" render={({ field }) => <FormItem><FormLabel>Skills (comma-separated)</FormLabel><FormControl><Textarea rows={3} {...field} /></FormControl><FormMessage /></FormItem>} />
                   </AccordionContent>
                 </AccordionItem>
 
@@ -194,22 +194,22 @@ export function ResumeBuilder() {
                           <Card key={item.id} className="relative p-4 pt-8">
                             <Button variant="ghost" size="icon" className="absolute top-1 right-1 h-6 w-6" onClick={() => removeFn(index)}><Trash2 className="h-4 w-4" /></Button>
                             {section === 'education' && <>
-                              <FormField name={`education.${index}.institution`} control={form.control} render={({ field }) => <FormItem><FormLabel>Institution</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-                              <FormField name={`education.${index}.degree`} control={form.control} render={({ field }) => <FormItem className="mt-2"><FormLabel>Degree</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-                              <FormField name={`education.${index}.graduationDate`} control={form.control} render={({ field }) => <FormItem className="mt-2"><FormLabel>Graduation Date</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                              <FormField name={`education.${index}.institution`} render={({ field }) => <FormItem><FormLabel>Institution</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                              <FormField name={`education.${index}.degree`} render={({ field }) => <FormItem className="mt-2"><FormLabel>Degree</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                              <FormField name={`education.${index}.graduationDate`} render={({ field }) => <FormItem className="mt-2"><FormLabel>Graduation Date</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
                             </>}
                             {section === 'experience' && <>
-                                <FormField name={`experience.${index}.title`} control={form.control} render={({ field }) => <FormItem><FormLabel>Job Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-                                <FormField name={`experience.${index}.company`} control={form.control} render={({ field }) => <FormItem className="mt-2"><FormLabel>Company</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField name={`experience.${index}.title`} render={({ field }) => <FormItem><FormLabel>Job Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField name={`experience.${index}.company`} render={({ field }) => <FormItem className="mt-2"><FormLabel>Company</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
                                 <div className="grid grid-cols-2 gap-4 mt-2">
-                                <FormField name={`experience.${index}.startDate`} control={form.control} render={({ field }) => <FormItem><FormLabel>Start Date</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-                                <FormField name={`experience.${index}.endDate`} control={form.control} render={({ field }) => <FormItem><FormLabel>End Date</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField name={`experience.${index}.startDate`} render={({ field }) => <FormItem><FormLabel>Start Date</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField name={`experience.${index}.endDate`} render={({ field }) => <FormItem><FormLabel>End Date</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
                                 </div>
-                                <FormField name={`experience.${index}.description`} control={form.control} render={({ field }) => <FormItem className="mt-2"><FormLabel>Description</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField name={`experience.${index}.description`} render={({ field }) => <FormItem className="mt-2"><FormLabel>Description</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
                             </>}
                             {section === 'projects' && <>
-                                <FormField name={`projects.${index}.name`} control={form.control} render={({ field }) => <FormItem><FormLabel>Project Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
-                                <FormField name={`projects.${index}.description`} control={form.control} render={({ field }) => <FormItem className="mt-2"><FormLabel>Description</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField name={`projects.${index}.name`} render={({ field }) => <FormItem><FormLabel>Project Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>} />
+                                <FormField name={`projects.${index}.description`} render={({ field }) => <FormItem className="mt-2"><FormLabel>Description</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>} />
                             </>}
                           </Card>
                         ))}
@@ -220,83 +220,83 @@ export function ResumeBuilder() {
                 })}
               </Accordion>
             </form>
-          </Form>
-        </CardContent>
-      </Card>
-
-      <div className="md:col-span-1 space-y-6 sticky top-8">
-        <Card>
-          <CardHeader><CardTitle>Templates & Actions</CardTitle></CardHeader>
-          <CardContent className="space-y-6">
-            <div>
-              <FormLabel>Select a Template</FormLabel>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-2">
-                {templates.map(template => (
-                  <button key={template.id} onClick={() => setSelectedTemplate(template.id)} className={`p-2 border-2 rounded-lg transition-all ${selectedTemplate === template.id ? 'border-primary ring-2 ring-primary' : 'border-border'}`}>
-                    <img src={template.previewUrl} alt={template.name} data-ai-hint="resume template" className="w-full h-auto rounded-md object-cover" />
-                    <p className="text-sm font-medium mt-2 text-center">{template.name}</p>
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button onClick={form.handleSubmit(onGenerate)} disabled={isGenerating} className="w-full bg-accent hover:bg-accent/90">
-                {isGenerating ? <Loader2 className="animate-spin mr-2" /> : <Wand2 className="mr-2" />} Generate Resume
-              </Button>
-              <Button onClick={onSuggest} disabled={isSuggesting} variant="outline" className="w-full">
-                {isSuggesting ? <Loader2 className="animate-spin mr-2" /> : <Briefcase className="mr-2" />} Suggest Job Roles
-              </Button>
-              <Button onClick={handlePrint} variant="outline" className="w-full" disabled={!generatedResume}>
-                <Download className="mr-2" /> Download
-              </Button>
-            </div>
           </CardContent>
         </Card>
-        
-        <Tabs defaultValue="preview" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="preview">Resume Preview</TabsTrigger>
-            <TabsTrigger value="suggestions">Job Suggestions</TabsTrigger>
-          </TabsList>
-          <TabsContent value="preview">
-             <div id="resume-preview-wrapper">
-                <Card id="resume-preview" className="h-[70vh] overflow-y-auto p-6 bg-white dark:bg-card">
-                  {isGenerating ? 
-                  <div className="flex items-center justify-center h-full"><Loader2 className="h-8 w-8 animate-spin text-primary"/></div> 
-                  : <ResumePreview content={generatedResume} />}
-                </Card>
-             </div>
-          </TabsContent>
-          <TabsContent value="suggestions">
-            <Card className="h-[70vh] overflow-y-auto p-6">
-              {isSuggesting && <div className="flex items-center justify-center h-full"><Loader2 className="h-8 w-8 animate-spin text-primary"/></div>}
-              {jobSuggestions ? (
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-semibold mb-2">Suggested Job Roles</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {jobSuggestions.jobRoles.map(role => <Badge key={role} variant="secondary">{role}</Badge>)}
+
+        <div className="md:col-span-1 space-y-6 sticky top-8">
+          <Card>
+            <CardHeader><CardTitle>Templates & Actions</CardTitle></CardHeader>
+            <CardContent className="space-y-6">
+              <div>
+                <FormLabel>Select a Template</FormLabel>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-2">
+                  {templates.map(template => (
+                    <button key={template.id} onClick={() => setSelectedTemplate(template.id)} className={`p-2 border-2 rounded-lg transition-all ${selectedTemplate === template.id ? 'border-primary ring-2 ring-primary' : 'border-border'}`}>
+                      <img src={template.previewUrl} alt={template.name} data-ai-hint="resume template" className="w-full h-auto rounded-md object-cover" />
+                      <p className="text-sm font-medium mt-2 text-center">{template.name}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button onClick={form.handleSubmit(onGenerate)} disabled={isGenerating} className="w-full bg-accent hover:bg-accent/90">
+                  {isGenerating ? <Loader2 className="animate-spin mr-2" /> : <Wand2 className="mr-2" />} Generate Resume
+                </Button>
+                <Button onClick={onSuggest} disabled={isSuggesting} variant="outline" className="w-full">
+                  {isSuggesting ? <Loader2 className="animate-spin mr-2" /> : <Briefcase className="mr-2" />} Suggest Job Roles
+                </Button>
+                <Button onClick={handlePrint} variant="outline" className="w-full" disabled={!generatedResume}>
+                  <Download className="mr-2" /> Download
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Tabs defaultValue="preview" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="preview">Resume Preview</TabsTrigger>
+              <TabsTrigger value="suggestions">Job Suggestions</TabsTrigger>
+            </TabsList>
+            <TabsContent value="preview">
+               <div id="resume-preview-wrapper">
+                  <Card id="resume-preview" className="h-[70vh] overflow-y-auto p-6 bg-white dark:bg-card">
+                    {isGenerating ? 
+                    <div className="flex items-center justify-center h-full"><Loader2 className="h-8 w-8 animate-spin text-primary"/></div> 
+                    : <ResumePreview content={generatedResume} />}
+                  </Card>
+               </div>
+            </TabsContent>
+            <TabsContent value="suggestions">
+              <Card className="h-[70vh] overflow-y-auto p-6">
+                {isSuggesting && <div className="flex items-center justify-center h-full"><Loader2 className="h-8 w-8 animate-spin text-primary"/></div>}
+                {jobSuggestions ? (
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-lg font-semibold mb-2">Suggested Job Roles</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {jobSuggestions.jobRoles.map(role => <Badge key={role} variant="secondary">{role}</Badge>)}
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold mb-2">Skills to Highlight</h3>
+                       <div className="flex flex-wrap gap-2">
+                        {jobSuggestions.skillsToHighlight.map(skill => <Badge key={skill}>{skill}</Badge>)}
+                      </div>
                     </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold mb-2">Skills to Highlight</h3>
-                     <div className="flex flex-wrap gap-2">
-                      {jobSuggestions.skillsToHighlight.map(skill => <Badge key={skill}>{skill}</Badge>)}
+                ) : !isSuggesting && (
+                   <div className="flex items-center justify-center h-full text-center text-muted-foreground">
+                    <div>
+                      <Briefcase className="mx-auto h-12 w-12 mb-4" />
+                      <p>AI-powered job suggestions will appear here.</p>
                     </div>
                   </div>
-                </div>
-              ) : !isSuggesting && (
-                 <div className="flex items-center justify-center h-full text-center text-muted-foreground">
-                  <div>
-                    <Briefcase className="mx-auto h-12 w-12 mb-4" />
-                    <p>AI-powered job suggestions will appear here.</p>
-                  </div>
-                </div>
-              )}
-            </Card>
-          </TabsContent>
-        </Tabs>
+                )}
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
-    </div>
+    </FormProvider>
   );
 }
